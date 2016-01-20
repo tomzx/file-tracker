@@ -1,0 +1,43 @@
+{
+	"name": "tomzx/file-tracker",
+	"description": "Track files for changes.",
+	"type": "library",
+	"keywords": [
+		"file",
+		"tracker",
+		"changes"
+	],
+	"homepage": "https://github.com/tomzx/file-tracker",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Tom Rochette",
+			"email": "tom@tomrochette.com",
+			"homepage": "http://www.tomrochette.com"
+		}
+	],
+	"support": {
+		"issues": "https://github.com/tomzx/file-tracker/issues"
+	},
+	"require": {
+		"php": ">=5.5.0"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~4"
+	},
+	"autoload": {
+		"psr-4": {
+			"tomzx\\FileTracker\\": "src/tomzx/FileTracker"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"tomzx\\FileTracker\\Test\\": "tests/tomzx/FileTracker"
+		}
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "0.1-dev"
+		}
+	}
+}
