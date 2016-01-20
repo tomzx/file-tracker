@@ -2,10 +2,6 @@
 
 namespace tomzx\FileTracker;
 
-// TODO: Support various strategies
-// get all changed files, only update changed files (upfront scan cost)
-// VS
-// know a file changed, update all files (update cost)
 class Tracker
 {
 	/**
@@ -57,13 +53,64 @@ class Tracker
 
 	/**
 	 * @param string|string[] $files
+	 * @return string[]
 	 */
-	public function update($files)
+	public function changedFiles($files)
+	{
+		$files = (array)$files;
+
+		$changes = [];
+		foreach ($files as $file) {
+			if ( ! array_key_exists($file, $this->files)) {
+				if (is_readable($file)) {
+					$changes[$file] = 'added';
+				} else {
+					$changes[$file] = 'unknown';
+				}
+
+				continue;
+			}
+
+			if ( ! is_readable($file)) {
+				$changes[$file] = 'deleted';
+				continue;
+			}
+
+			$hash = $this->files[$file];
+			if ($hash !== $this->calculateFileSignature($file)) {
+				$changes[$file] = 'changed';
+			}
+		}
+
+		return $changes;
+	}
+
+	/**
+	 * @param string|string[] $files
+	 */
+	public function track($files)
 	{
 		$files = (array)$files;
 
 		foreach ($files as $file) {
+			if ( ! is_readable($file)) {
+				unset($this->files[$file]);
+				continue;
+			}
+
 			$this->files[$file] = $this->calculateFileSignature($file);
+		}
+	}
+
+	/**
+	 * @param string|string[] $files
+	 */
+	public function untrack($files)
+	{
+		$files = (array)$files;
+
+		foreach ($files as $file) {
+			unset($this->files[$file]);
 		}
 	}
 

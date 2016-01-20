@@ -26,7 +26,7 @@ if ($tracker->hasChanged($files)) {
 }
 
 // Update the hash of the given files
-$tracker->update($files);
+$tracker->track($files);
 
 $files = ['composer.json', 'composer.lock'];
 if ($tracker->hasChanged($files)) {
@@ -34,11 +34,19 @@ if ($tracker->hasChanged($files)) {
 }
 
 // Update the hash of the given files
-$tracker->update($files);
+$tracker->track($files);
 
 // Store the latest hash in .bom.json
 $tracker->save();
 
+$files = ['.gitignore'];
+$changes = $tracker->changedFiles($files);
+if ($changes) {
+	echo 'Gitignore was changed' . PHP_EOL;
+}
+
+// Only update the hash of .gitignore if it changed
+$tracker->track(array_keys($changes));
 ```
 
 ## License
