@@ -26,7 +26,7 @@ class Tracker
 		$this->bomFilename = $bomFilename;
 
 		// TODO: Could be made lazy (only on first hasChanged call) <tom@tomrochette.com>
-		if (file_exists($this->bomFilename)) {
+		if (is_readable($this->bomFilename)) {
 			$this->files = (array)json_decode(file_get_contents($this->bomFilename), true);
 		}
 	}
