@@ -81,6 +81,6 @@ class Tracker
 	 */
 	protected function calculateFileSignature($file)
 	{
-		return sha1(file_get_contents($file));
+		return sha1_file($file);
 	}
 }
